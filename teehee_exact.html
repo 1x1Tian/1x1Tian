@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>teehee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    /* ===== Base ===== */
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #0b1026, #000);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    /* --- Love words --- */
+    #ui .love {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -225px 0 0 -225px;
+      --i: 1;
+    }
+
+    #ui .love_word {
+      color: #ea80b0;
+      font-size: 1.4rem;
+      transform: translateY(-100%) rotateZ(-30deg);
+      text-shadow: 0 0 10px #fff;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    #ui .love_horizontal {
+      animation: horizontal 10000ms infinite alternate ease-in-out;
+      animation-delay: calc(var(--i) * -300ms);
+    }
+
+    #ui .love_vertical {
+      animation: vertical 20000ms infinite linear;
+      animation-delay: calc(var(--i) * -300ms);
+    }
+
+    @keyframes horizontal {
+      from { transform: translateX(0px); }
+      to   { transform: translateX(450px); }
+    }
+
+    @keyframes vertical {
+      0%   { transform: translateY(180px); }
+      10%  { transform: translateY(45px); }
+      15%  { transform: translateY(4.5px); }
+      18%  { transform: translateY(0px); }
+      20%  { transform: translateY(4.5px); }
+      22%  { transform: translateY(34.61538px); }
+      24%  { transform: translateY(64.28571px); }
+      25%  { transform: translateY(112.5px); }
+      26%  { transform: translateY(64.28571px); }
+      28%  { transform: translateY(34.61538px); }
+      30%  { transform: translateY(4.5px); }
+      32%  { transform: translateY(0px); }
+      35%  { transform: translateY(4.5px); }
+      40%  { transform: translateY(45px); }
+      50%  { transform: translateY(180px); }
+      71%  { transform: translateY(428.57143px); }
+      72.5%{ transform: translateY(441.17647px); }
+      75%  { transform: translateY(450px); }
+      77.5%{ transform: translateY(441.17647px); }
+      79%  { transform: translateY(428.57143px); }
+      100% { transform: translateY(180px); }
+    }
+
+    /* ===== Flowers layer ===== */
+    #flowers {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .flower {
+      position: absolute;
+      top: -10vh;
+      animation: fall linear infinite;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.4));
+    }
+
+    @keyframes fall {
+      from { transform: translateY(-10vh) rotate(0deg); }
+      to   { transform: translateY(110vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="flowers"></div>
+  <div id="ui"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const N = 100;
+      const ui = document.getElementById("ui");
+
+      for (let i = 1; i <= N; i++) {
+        const love = document.createElement("div");
+        love.className = "love";
+        love.style.setProperty("--i", i);
+
+        const h = document.createElement("div");
+        h.className = "love_horizontal";
+
+        const v = document.createElement("div");
+        v.className = "love_vertical";
+
+        const word = document.createElement("div");
+        word.className = "love_word";
+        word.textContent = "I love linh";
+
+        v.appendChild(word);
+        h.appendChild(v);
+        love.appendChild(h);
+        ui.appendChild(love);
+      }
+
+      /* ===== FALLING FLOWERS (EMOJI) ===== */
+      const flowerLayer = document.getElementById("flowers");
+      const FLOWERS = 35;
+      const flowerEmojis = ["🌸", "🌺"];
+
+      for (let i = 0; i < FLOWERS; i++) {
+        const flower = document.createElement("div");
+        flower.className = "flower";
+        flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+
+        const size = Math.random() * 12 + 18;
+        flower.style.fontSize = size + "px";
+        flower.style.left = Math.random() * 100 + "vw";
+        flower.style.animationDuration = Math.random() * 8 + 6 + "s";
+        flower.style.animationDelay = Math.random() * 8 + "s";
+
+        flowerLayer.appendChild(flower);
+      }
+
+    });
+  </script>
+
+</body>
+</html>
